@@ -1,6 +1,12 @@
+<?php
+$con=mysqli_connect("localhost","root","","on road fuel demand");
+$sql="SELECT DISTINCT shop_id FROM work_details";
+$res=mysqli_query($con,$sql);
+?>
+
 <html>
   <head>
-    <title>fuel station</title>
+    <title>Fuel station</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
 body {
@@ -26,7 +32,7 @@ body {
 }
 
 .topnav a:hover {
-  background-color: #641E16;
+  background-color: #641E16 ;
   color: white;
 }
 
@@ -34,75 +40,99 @@ body {
   background-color:#641E16;
   color: white;
 }
-
-.button {
-  background-color: #2874A6;
-  border: none;
-  border-radius:50%;
-  color: white;
-  padding: 12px 15px;
-  text-align: left;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
+      .button{
+	  background:#641E16;
+	  border:none;
+	  border-radius:25%;
+	  color:white;
+	  padding:10px 15px;
+	  text-align: left;
+	  text-decoration:none;
+	  dispaly:inline-block;
+	  font-size:16px;
+	  margin:4px 2px;
+	  cursor:pointer;
+	}
+	
+      .box {
+        width: 120px;
+        height: 40px;
+        border: 1px solid #999;
+        font-size: 18px;
+        color: #1c87c9;
+        background-color: #eee;
+        border-radius: 5px;
+        box-shadow: 4px 4px #ccc;
+      }
 
 </style>
 </head>
- <body background="bg.jpeg" style="background-repeat:no-repeat;background-size:99% 110%;">
+<body background="bg.jpeg" style="background-repeat:no-repeat;background-size:99% 99%;">
 <center>
 <h1 style = "font-family: Georgia, serif;" ><font color="black">ON ROAD FUEL DEMAND APPLICATION</font color></h1><br/>
 <h2><marquee direction="left"><font color="#2874A6">"On-road fuel supply applications for developing on-demand fuel supplies depend on user orders and
 requirements."</font color></marquee></h2><br/>
 <div class="topnav">
-  <a  href="adminhomepage.php">Home</a>
+  <a href="userhomepage.php">Home</a>
   <a class="active" href="fuelstation.php"> Fuel Station</a>
-  <a href="enquiry.php">Enquiry</a>
+  <a href="myenquiry.php">My Enquiry</a>
   <a href="about.php">About</a>
   <a href="logout.php">Log out</a>
 </div>
-<br/></center>
-<h3> &nbsp &nbsp &nbsp <font color ="#660066">Do you want to add new fuel station? click here >></font color>
-<input type="button" class="button" name="add" Value="ADD"onclick="window.location.href='add.php'"/></h3>
 <br/>
-<center>
-<?php
-$conn =mysqli_connect ("localhost","root","","on road fuel demand");
-$query=mysqli_query($conn, "SELECT  * FROM work_details ");
+<br/>
+  <center><h2> <font color="#641E16">-- SELECT SHOP ID TO GET SHOP INFORMATION --</h2></center>
+<form method ="POST">
+ <select name="fuel" class ="box"> 
+ <option>  SHOP ID  </option>
+ <?php while ($rows=mysqli_fetch_array($res)){
+	 ?>
+	 <option value ="<?php echo $rows['shop_id']; ?>"> <?php echo $rows['shop_id']; ?>  </option>
+	 <?php 
+     }
+	 ?>
+	 </select></br><br/>
+	  <input type="submit"  class="button" name="search" value="search" />
+	  </form>
+	 </body>
+	 </html>
+ <?php
+if(isset($_POST['search']))
+{
+$d=$_POST['fuel'];
+$query=mysqli_query($con,"SELECT * FROM work_details WHERE shop_id='$d'");
+
 ?>
 <html>
-<head>
-<title> my page</title>
-</head>
-<body>
-<table border = "4" border color = "#641E16"  cellspacing ="6" cellpadding ="10"  align="center" >
-<tr bgcolor="grey">
-<center><th>shop id</th>
-<th> shop name </th>
-<th>work facility details</th>
-<th> service_charge </th>
-<th> Edit</th>
-<th> Delete </th></center>
-</tr>
-<?php
-while($r=mysqli_fetch_array($query))
-{
-	$shop_id=$r['shop_id'];
-	$shop_name=$r['shop_name'];
-	$work_facility_details =$r['work_facility_details'];
-	$service_charge=$r['service_charge'];
-	?>
-	<tr>
-	<td> <?php echo $shop_id;?></td>
-	<td> <?php echo $shop_name;?></td>
-	<td> <?php echo $work_facility_details;?></td>
-	<td> <?php echo $service_charge;?></td>
-	<td><a href="edit.php?id=<?php echo $shop_id?>">edit </a></td>
-	<td><a href="delete.php?id=<?php echo $shop_id?>">delete</a>
-	</tr>
-<?php } ?>
-</table>
-</body>
+ <head>
+  <title></title>
+  </head>
+  <body>
+  <h3>shop id=<?php echo $d;?>&nbsp &nbsp  Details Table:</h3>
+  <table border="5" cellspacing="4" cellpadding="6" align="center">
+  <tr bgcolor="5499c7">
+  <th>shop id</th>
+  <th>shop name</th>
+  <th>work facility details </th>
+   <th>service charge</th>
+   <th> Enquiry </th>
+  </tr>
+    <?php
+  while($r=mysqli_fetch_array($query))
+  {
+	  $uname=$r['shop_id'];
+	  $mob=$r['shop_name'];
+	  $iname=$r['work_facility_details'];
+	  $qty=$r['service_charge'];
+	 ?>
+	  <tr align="center" >
+	  <td><?php echo $uname?></td>
+	  <td><?php echo $mob?></td>
+	  <td><?php echo $iname?></td>
+	  <td><?php echo $qty?></td>
+	  <td><a href="enquiry.php?id=<?php echo $id?>">Enquiry</a></td>
+	  
+  <?php } ?>
+  <?php } ?>
+  </body>
 </html>

@@ -1,28 +1,9 @@
 <html>
- <head>
-  <title>enquiry</title>
- </head>
- <style>
-  input[type=text]{
-	  width:10%;
-	  padding:15px 20px;
-	  margin:8px 0;
-	  box-sizing:border-box;
-  }
-  input[type=submit]
-  {
-	  margin:4px 2px;
-	  padding:5px 22px;
-	  cursor:pointer;
-	  width:5%;
-  }
-  
-  input::placeholder{
-	  font-size:20px;
-	  text-align:center;
-	  letter-spacing:2px;
-  }
-  body {
+      <head>
+	        <title> enquiry form </title>
+<style>
+
+body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -45,7 +26,7 @@
 }
 
 .topnav a:hover {
-   background-color:#641E16;
+  background-color: #641E16 ;
   color: white;
 }
 
@@ -53,8 +34,29 @@
   background-color:#641E16;
   color: white;
 }
- .box {
-        width: 230px;
+table {
+  position: center;
+  border-radius:25px;
+  padding:20px;
+}
+
+
+      .button{
+	  background:#2874A6;
+	  border:none;
+	  border-radius:25%;
+	  color:black;
+	  padding:10px 15px;
+	  text-align: left;
+	  text-decoration:none;
+	  dispaly:inline-block;
+	  font-size:16px;
+	  margin:4px 2px;
+	  cursor:pointer;
+	  
+	}
+	 .box {
+        width: 190px;
         height: 40px;
         border: 1px solid #999;
         font-size: 18px;
@@ -63,82 +65,72 @@
         border-radius: 5px;
         box-shadow: 4px 4px #ccc;
       }
-	    		    .button{
-	  background:#641E16;
-	  border:none;
-	  border-radius:25%;
-	  color:white;
-	  padding:10px 15px;
-	  text-align: left;
-	  text-decoration:none;
-	  dispaly:inline-block;
-	  font-size:16px;
-	  margin:4px 2px;
-	  cursor:pointer;
-	}
- </style>
- </head>
- <body background="bg.jpeg" style="background-repeat:no-repeat;background-size:99% 99%;">
+</style>
+	  </head>
+	 <body background="bg.jpeg" style="background-repeat:no-repeat;background-size:99% 99%;">
 <center>
 <h1 style = "font-family: Georgia, serif;" ><font color="black">ON ROAD FUEL DEMAND APPLICATION</font color></h1><br/>
 <h2><marquee direction="left"><font color="#2874A6">"On-road fuel supply applications for developing on-demand fuel supplies depend on user orders and
 requirements."</font color></marquee></h2><br/>
 <div class="topnav">
-  <a  href="adminhomepage.php">Home</a>
-  <a href="fuelstation.php">Fuel station</a>
-  <a  class="active" href="enquiry.php">Enquiry</a>
-  <a href="about.php">About</a>
-  <a href="logout.php">Log out</a>
+  <a href="userhomepage.php">Home</a>
+  <a class="active" href="fuelstation.php"> Fuel Station</a>
+  <a href="myenquiry.php">My Enquiry</a>
+  <a href="#about">About</a>
+  <a href="#about">Log out</a>
 </div>
-<center><h3><font color="e74c3c">Please enter the valid date to get fuel station details</font> </h3>
- <form method="POST">
- <input type="date" class="box" name="dated"--- required /><br/><br/>
- 
- <input type="submit" name="search" value="search" class="button"/>
- </form></center></br>
- </body>
+<br/>
+<br/>
+	  <form method ="POST" >
+	  <center>
+	  <table  height ="500" width ="450" cellspacing ="9" align ="center">
+	  <tr><br/>
+	  <td colspan ="2"><h1><center> <font color="#2874A6"> ENQUIRY FORM</center></h1></td></tr><br>
+	  <tr ><td><label> <h3><font color="#2874A6">USER NAME :  </lable>
+	  <td><input type ="text" class="box" name ="A" placeholder ="Enter your user name"/><br/><br/></td></tr>
+	  <tr><td><label> <h3> <font color="#2874A6"> SHOP ID :  </lable>
+	  <td><input type ="text" class="box" name ="B" placeholder ="Enter your shop ID" /><br/><br/></td></tr>
+	  	<tr><td><label> <h3><font color="#2874A6"> MOBILE NUMBER :  </lable>
+	  <td><input type ="tel" class="box" name ="C" placeholder ="Ex +911234567898" maxlength ="13" pattern="[+]{1}[0-9]{2}[0-9]{10}" required /><br/><br/></td></tr>
+		<tr><td><label> <h3> <font color="#2874A6"> REQUIREMENT WORK  &nbsp <br/> DETAILS :  </label>
+		
+	  <td><input type ="text" class="box" name ="D" placeholder ="Enter your requirements"/><br/><br/></td></tr>
+	  <tr><td><label> <h3><font color="#2874A6"> DATED : </lable>
+	  <td><input type ="date" class="box" name ="E" placeholder ="Enter your address"/><br/><br/></td></tr>
+	  
+				<td colspan="2" align="center">
+			    <input type="Submit" class="button" name ="submit">
+				</td>
+	  </tr></table>
+	  </center>
+	  </form>
+	  </body>
 </html>
-<?php
-if(isset($_POST['search']))
+<?php 
+$conn = mysqli_connect("localhost","root","","on road fuel demand");
+
+if(isset($_POST['submit']))
 {
-include("db_connect2.php");
-
-$d=$_POST['dated'];
-$query=mysqli_query($conn,"SELECT * FROM enquiry WHERE dated='$d'");
-
+	$v1=$_POST["A"];
+	$v2=$_POST["B"];
+	$v3=$_POST["C"];
+	$v4=$_POST["D"];
+	$v5=$_POST["E"];
+	echo $v1;
+	echo $v2;
+	echo $v3;
+	echo $v4;
+	echo $v5;
+	$query = mysqli_query ($conn, "insert into enquiry values('$v1','$v2','$v3','$v4','$v5')");
+	if($query)
+	{
+		 echo "<script type='text/javascript'>alert('Thank you for your enquiry we will get you soon');
+			   window.location.assign('userhomepage.php')</script>";
+	}
+	else
+	{
+		 echo "<script type='text/javascript'>alert(' your enquiry fail so please try again');
+			   window.location.assign('fuelstation.php')</script>";
+	}
+}
 ?>
-<html>
- <head>
-  <title>enquiry</title>
-  </head>
-  <body>
-  <h3>Date=<?php echo $d;?>&nbsp &nbsp  Details Table:</h3>
-  <table border="5" cellspacing="4" cellpadding="6" align="center">
-  <tr bgcolor="5499c7">
-  <th>User name</th>
-  <th>Mobile no</th>
-  <th>Shop Id</th>
-   <th>Requirement work details</th>
-   <th >Dated</th>
-  </tr>
-   <?php
-  while($r=mysqli_fetch_array($query))
-  {
-	  $uname=$r['user_name'];
-	  $mob=$r['user_mobile'];
-	  $iname=$r['shop_id'];
-	  $qty=$r['requirement_work_details'];
-	  $date=$r['dated'];
-	 ?>
-	 <tr align="center" bgcolor="ecfof1">
-	  <td><?php echo $uname?></td>
-	  <td><?php echo $mob?></td>
-	  <td><?php echo $iname?></td>
-	  <td><?php echo $qty?></td>
-	  <td><?php echo $date?></td>
-	  </tr>
-  <?php } ?>
-  <?php } ?>
-  </table>
-  </body>
-  </html>

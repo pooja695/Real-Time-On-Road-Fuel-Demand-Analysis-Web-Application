@@ -1,6 +1,7 @@
 <html>
-<head>
-<title> About  </title>
+ <head>
+  <title> my enquiry</title>
+ </head>
  <style>
   input[type=text]{
 	  width:20%;
@@ -76,7 +77,6 @@
         box-shadow: 4px 4px #ccc;
       }
  </style>
- </head>
 <body background="bg.jpeg" style="background-repeat:no-repeat;background-size:99% 99%;">
 <center>
 <h1 style = "font-family: Georgia, serif;" ><font color="black">ON ROAD FUEL DEMAND APPLICATION</font color></h1><br/>
@@ -85,30 +85,58 @@ requirements."</font color></marquee></h2><br/>
 <div class="topnav">
   <a  href="userhomepage.php">Home</a>
   <a href="fuelstation.php">Fuel station</a>
-  <a   href="myenquiry.php">My Enquiry</a>
-  <a class="active" href="about.php">About</a>
+  <a  class="active" href="myenquiry.php">My Enquiry</a>
+  <a href="about.php">About</a>
   <a href="logout.php">Log out</a>
 </div>
-<br/>
-<h1><font color="#641E16" >--ABOUT--</font color><h1/></center>
-<h3> &nbsp &nbsp &nbsp  > Due to growth of automobiles in market, fuel consumption became more.  In existing systm, unfortunately because of some reason if vehicle stops due to lack of petrol, it will be very hard  for the owner to push the vehicle to the nearest petrol pump.</h3>
-<h3> &nbsp &nbsp &nbsp  > In this application three modules using user, fuel station, admin. Admin can verify Fuel Station details, then it will see user modules. Fuel Station can add their branch information like address and google map geo location and kind of fuel provide.</h3>
-<h3> &nbsp &nbsp &nbsp  > User can search by locality or station name and book the fuel on online app. Our objective develop using angular java script and MySQL as our backend database with responsive applicaion.
-</h3><br/>
-<h3>
-&nbsp &nbsp <font color="#641E16" >MODULE  LIST</font color> <br/><br/>
-&nbsp &nbsp &nbsp  USER <br/><br/>
-&nbsp &nbsp &nbsp>	LOGIN<br/>
-&nbsp &nbsp &nbsp>	REGISTER <br/>
-&nbsp &nbsp &nbsp>SEARCH FUEL STATION<br/>
-&nbsp &nbsp &nbsp>	HOME PAGE<br/> 
-&nbsp &nbsp &nbsp>	MY ENQUIRY<br/><br/>
-&nbsp &nbsp ADMIN<br/><br/>
-&nbsp &nbsp &nbsp>	LOGIN<br/>
-&nbsp &nbsp &nbsp>	REGISTER <br/>
-&nbsp &nbsp &nbsp>CREATE FUEL STATION<br/>
-&nbsp &nbsp &nbsp>	HOME PAGE<br/> 
-&nbsp &nbsp &nbsp>	ENQUIRY<br/>
-</h3>
-</body>
+ <center><h3><font color="e74c3c">Please enter the valid mobile number to get Enquiry details</font> </h3>
+ <form method="POST">
+<input type="tel"  placeholder="Ex:+912345678908" class="box"
+ name="mobile"maxlength ="13" pattern="[+]{1}[0-9]{2}[0-9]{10}" required /><br/><br/>
+ <input type="submit" name="search" value="search &nbsp" class="button"/>
+ </form></center></br>
+ </body>
 </html>
+<?php
+if(isset($_POST['search']))
+{
+include("db_connect.php");
+
+$d=$_POST['mobile'];
+$query=mysqli_query($conn,"SELECT * FROM enquiry WHERE user_mobile='$d'");
+
+?>
+<html>
+ <head>
+  <title>enquiry</title>
+  </head>
+  <body>
+  <h3>Mobile number=<?php echo $d;?>&nbsp &nbsp  Details Table:</h3>
+  <table border="5" cellspacing="4" cellpadding="6" align="center">
+  <tr bgcolor="5499c7">
+  <th>User name</th>
+  <th>Mobile no</th>
+  <th>Shop Id</th>
+   <th>Requirement work details</th>
+   <th width="100">Dated</th>
+  </tr>
+  
+  <?php
+  while($r=mysqli_fetch_array($query))
+  {
+	  $uname=$r['user_name'];
+	  $mob=$r['user_mobile'];
+	  $iname=$r['shop_id'];
+	  $qty=$r['requirement_work_details'];
+	  $date=$r['dated'];
+	 ?>
+	  <tr align="center" bgcolor="ecfof1">
+	  <td><?php echo $uname?></td>
+	  <td><?php echo $mob?></td>
+	  <td><?php echo $iname?></td>
+	  <td><?php echo $qty?></td>
+	  <td><?php echo $date?></td>
+
+  <?php } ?>
+  <?php } ?>
+
